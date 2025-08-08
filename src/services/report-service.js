@@ -18,8 +18,10 @@ export async function getReports() {
     }
   }
 
-  export async function createReport(pokemonType) {
+  export async function createReport(pokemonType, sample_size) {
     try {
+
+      console.log("Creating report with type:", pokemonType, "and sample size:", sample_size)
       const response = await fetch(`${settings.URL}/api/pokemon/request`, {
         method: "POST",
         headers: {
@@ -27,6 +29,7 @@ export async function getReports() {
         },
         body: JSON.stringify({
           pokemon_type: pokemonType,
+          sample_size: sample_size
         }),
       })
 
