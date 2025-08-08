@@ -1,0 +1,12 @@
+docker buildx build --platform linux/amd64 -t ui-pokemon:latest . --load
+
+docker run -d -p 3000:3000 --name pokeui-container ui-pokemon:latest
+
+az login
+az acr login --name acrpokemonprojectdev
+
+docker tag ui-pokemon:latest acrpokemonprojectdev.azurecr.io/ui-pokemon:latest
+docker tag ui-pokemon:latest acrpokemonprojectdev.azurecr.io/ui-pokemon:1.1.0
+
+docker push acrpokemonprojectdev.azurecr.io/ui-pokemon:latest
+docker push acrpokemonprojectdev.azurecr.io/ui-pokemon:1.1.0
