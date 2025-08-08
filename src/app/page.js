@@ -110,6 +110,7 @@ export default function PokemonReportsPage() {
   return (
     <div className="container mx-auto py-8 px-4">
       <Card>
+        v1.1.3
         <CardHeader className="pb-2">
           <CardTitle className="text-2xl font-bold">Pokémon Reports Generator</CardTitle>
         </CardHeader>
