@@ -1,0 +1,63 @@
+import settings from "@/lib/settings";
+
+export async function getReports() {
+    try {
+      const response = await fetch(`${settings.URL}/api/pokemon/request`)
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} - ${response.statusText}`)
+      }
+
+      const data = await response.json()
+      console.log("API Response (GET):", data) // Para depurar la estructura de datos
+
+      return Array.isArray(data) ? data : data.results || data.data || []
+    } catch (error) {
+      console.error("Error fetching reports:", error)
+      throw error
+    }
+  }
+
+  export async function createReport(pokemonType, sample_size) {
+    try {
+
+      console.log("Creating report with type:", pokemonType, "and sample size:", sample_size)
+      const response = await fetch(`${settings.URL}/api/pokemon/request`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          pokemon_type: pokemonType,
+          sample_size: sample_size
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} - ${response.statusText}`)
+      }
+
+      const data = await response.json()
+      console.log("API Response (POST):", data) // Para depurar la respuesta
+
+      return data
+    } catch (error) {
+      console.error("Error creating report:", error)
+      throw error
+    }
+  }
+
+
+class ReportService {
+  static async deleteReport(reportId) {
+    console.log("Deleting report with ID:", reportId)
+    const response = await fetch(`${settings.URL}/api/pokemon/request/${reportId}`, {
+      method: "DELETE",
+    })
+    if (!response.ok) {
+      throw new Error("No se pudo eliminar el reporte")
+    }
+  }
+}
+
+export default ReportService
